@@ -6,7 +6,7 @@ import 'package:agenda_pet/domain/repositories/appointment_repository.dart';
 class AppointmentRepositoryImpl implements AppointmentRepository {
   final LocalDB localDB;
 
-  AppointmentRepositoryImpl({required this.localDB});
+  AppointmentRepositoryImpl(this.localDB);
 
   @override
   Future<void> addAppointment(Appointment appointment) async {

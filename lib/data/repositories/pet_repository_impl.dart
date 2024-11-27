@@ -6,7 +6,7 @@ import 'package:agenda_pet/domain/repositories/pet_repository.dart';
 class PetRepositoryImpl implements PetRepository {
   final LocalDB localDB;
 
-  PetRepositoryImpl({required this.localDB});
+  PetRepositoryImpl(this.localDB);
 
   @override
   Future<void> addPet(Pet pet) async {
