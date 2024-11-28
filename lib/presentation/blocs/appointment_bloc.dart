@@ -8,20 +8,20 @@ class AppointmentBloc extends Bloc<AppointmentEvent, AppointmentState> {
   final GetAppointments getAppointments;
 
   AppointmentBloc({required this.addAppointment, required this.getAppointments})
-    : super(AppointmentInitial());
-
-  Stream<AppointmentState> mapEventToState(AppointmentEvent event) async* {
-    if (event is AddAppointmentEvent) {
-      yield AppointmentLoading();
+    : super(AppointmentInitial()) {
+    on<AddAppointmentEvent>((event, emit) async {
+      emit(AppointmentLoading());
       await addAppointment(event.appointment);
-      yield AppointmentAdded();
+      emit(AppointmentAdded());
       final appointments = await getAppointments();
-      yield AppointmentsLoaded(appointments: appointments);
-    } else if (event is GetAppointmentsEvent) {
-      yield AppointmentLoading();
+      emit(AppointmentsLoaded(appointments: appointments));
+    });
+
+    on<GetAppointmentsEvent>((event, emit) async {
+      emit(AppointmentLoading());
       final appointments = await getAppointments();
-      yield AppointmentsLoaded(appointments: appointments);
-    }
+      emit(AppointmentsLoaded(appointments: appointments));
+    });
   }
 }
 

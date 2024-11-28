@@ -7,20 +7,20 @@ class PetBloc extends Bloc<PetEvent, PetState> {
   final AddPet addPet;
   final GetPets getPets;
 
-  PetBloc({required this.addPet, required this.getPets}) : super(PetInitial());
-
-  Stream<PetState> mapEventToState(PetEvent event) async* {
-    if (event is AddPetEvent) {
-      yield PetLoading();
+  PetBloc({required this.addPet, required this.getPets}) : super(PetInitial()) {
+    on<AddPetEvent>((event, emit) async {
+      emit(PetLoading());
       await addPet(event.pet);
-      yield PetAdded();
+      emit(PetAdded());
       final pets = await getPets();
-      yield PetsLoaded(pets: pets);
-    } else if (event is GetPetsEvent) {
-      yield PetLoading();
+      emit(PetsLoaded(pets: pets));
+    });
+
+    on<GetPetsEvent>((event, emit) async {
+      emit(PetLoading());
       final pets = await getPets();
-      yield PetsLoaded(pets: pets);
-    }
+      emit(PetsLoaded(pets: pets));
+    });
   }
 }
 

@@ -7,6 +7,8 @@ import 'package:agenda_pet/domain/usecases/add_appointment.dart';
 import 'package:agenda_pet/domain/usecases/add_pet.dart';
 import 'package:agenda_pet/domain/usecases/get_appointments.dart';
 import 'package:agenda_pet/domain/usecases/get_pets.dart';
+import 'package:agenda_pet/presentation/blocs/appointment_bloc.dart';
+import 'package:agenda_pet/presentation/blocs/pet_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 final it = GetIt.instance;
@@ -26,4 +28,10 @@ void setup() {
   it.registerLazySingleton(() => GetPets(it()));
   it.registerLazySingleton(() => AddAppointment(it()));
   it.registerLazySingleton(() => GetAppointments(it()));
+
+  // Register BLoCs
+  it.registerFactory(() => PetBloc(addPet: it(), getPets: it()));
+  it.registerFactory(
+    () => AppointmentBloc(addAppointment: it(), getAppointments: it()),
+  );
 }
