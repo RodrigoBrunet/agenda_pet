@@ -1,9 +1,6 @@
-import 'package:agenda_pet/presentation/blocs/appointment_bloc.dart';
-import 'package:agenda_pet/presentation/blocs/pet_bloc.dart';
-import 'package:agenda_pet/presentation/pages/add_appointment_page.dart';
+import 'package:agenda_pet/presentation/blocs/bloc_providers.dart';
 import 'package:agenda_pet/presentation/pages/add_pet_page.dart';
-import 'package:agenda_pet/presentation/pages/appointment_list_page.dart';
-import 'package:agenda_pet/presentation/pages/pet_list_page.dart';
+import 'package:agenda_pet/presentation/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'injection_container.dart' as di;
@@ -19,18 +16,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => di.it<PetBloc>()),
-        BlocProvider(create: (_) => di.it<AppointmentBloc>()),
-      ],
+      providers: BlocProviders.providers,
       child: MaterialApp(
         title: 'Flutter Demo',
-        routes: {
-          '/': (context) => PetListPage(),
-          '/add-pet': (context) => AddPetPage(),
-          '/appointments': (context) => AppointmentListPage(),
-          '/add-appointment': (context) => AddAppointmentPage(),
-        },
+        routes: AppRoutes.getRoutes(),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
